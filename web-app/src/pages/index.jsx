@@ -18,7 +18,7 @@ function Home() {
             <ListGroup>
               <ListGroup.Item action onClick={() => router.push('/materia/1')}>De la Información al Conocimiento</ListGroup.Item>
               <ListGroup.Item action onClick={() => router.push('/materia/2')}>El lenguaje en la Relación del Hombre con el Mundo</ListGroup.Item>
-              <ListGroup.Item action onClick={() => router.push('/materia/3')}>Representación Simbólica de los Algoritmos</ListGroup.Item>
+              <ListGroup.Item action onClick={() => router.push('/materia/3')}>Textos y Visiones del Mundo</ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>
