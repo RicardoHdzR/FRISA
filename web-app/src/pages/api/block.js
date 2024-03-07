@@ -6,18 +6,20 @@ export default function index(req, res) {
 
     switch (method) {
         case 'GET':
-            pgPool.query('SELECT * FROM course', (error, results) => {
+            pgPool.query('SELECT * FROM block', (error, results) => {
                 if (error) {
                     throw error;
                 } else {
                     res.json({
                         error: false,
                         message: 'Data retrieved successfully',
-                        data: results.rows // Send the data retrieved from the database
+                        data: results.rows 
                     });
                 }
             });
             break;
+        
+        
         default:
             return res.status(400).json('Invalid request');
     }
