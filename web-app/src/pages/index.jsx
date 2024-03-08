@@ -8,7 +8,17 @@ function Home() {
   const [modules, setModules] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const sessionHandler = async () => {
+    //Obtenemos la sesión
+    const session = await fetch(`/api/session`)
+    //Si existe información de sesión la lee y decide a donde mandar al usuario/admin
+    if(session.data == null){
+        router.push('/logIn')
+    }
+}
+
   useEffect(() => {
+    sessionHandler()
     getUser();
   }, []);
 

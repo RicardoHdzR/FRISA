@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Col, Row, ListGroup, Card, Image, Text } from 'react-bootstrap';
+import { Button, Container, Col, Row, ListGroup, Card, Image, Text, Form } from 'react-bootstrap';
 import Link from "next/link"
 
 import { useRouter } from 'next/router';
@@ -20,6 +20,44 @@ function index() {
   const [studyTools, setStudyTools] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [selectedOption, setSelectedOption] = useState('');
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState({})
+  const [currentOptions, setCurrentOptions] = useState([])
+
+  const handleOption = (e) => {
+    console.log(e.target.id)
+    setSelectedOption(e.target.id)
+  };
+
+  const handleQuestion = async () => {
+    
+
+  };
+
+  const getQuestions = async () => {
+    console.log('fetch preguntas')
+    try{
+      const response = await fetch('/api/question')
+      const {data} = await response.json()
+      console.log(data)
+      console.log(data[0])
+      console.log(JSON.parse(data[0].question))
+      console.log(JSON.parse(data[0].question).options)
+      setQuestions(data)
+      setCurrentQuestion(JSON.parse(data[0].question))
+      setCurrentOptions(JSON.parse(data[0].question).options)
+      console.log('questions fetched')
+    }catch (error) {
+      console.error('Error fetching questions:', error);
+      
+    }
+    
+    
+    
+  }
+
+
 
   const handleRefresh = () => {
     router.reload();
@@ -27,6 +65,7 @@ function index() {
 
   useEffect(() => {
     getStudyTools()
+    getQuestions()
     if (id) {
       if (id != undefined) {
         console.log('seteamos el id');
@@ -112,7 +151,23 @@ function index() {
           </Container>
 
           <Container className='bg-danger h-50'>
-            preguntas
+            <Form className='text-start mb-3'>
+              <Form.Group>
+                <Form.Label>{currentQuestion.question}</Form.Label>
+                
+                {currentOptions.map((option,index) => (
+                  <div key={index}>
+                    <Form.Check type='checkbox' name='p1' id={`p1-${index}`} label={`${option.answer}`}></Form.Check>
+                  </div>
+                ))}
+                
+              </Form.Group>
+            </Form>
+            <div className='text-end'>
+              <Button className='ms-3' >Evaluar</Button>
+              <Button className='ms-3'>Siguiente Pregunta</Button>
+            </div>
+            
           </Container>
 
 
