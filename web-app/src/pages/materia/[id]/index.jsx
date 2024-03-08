@@ -91,9 +91,9 @@ function index() {
               <div class="card-container" style={{ width: '100%', display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
                 {studyTools.map((studyTool) => (
                   <Container>
-                    <div class="card" style={{ minWidth: '150px', height: '150px', scrollSnapAlign: 'start' }}>
+                    <a href={studyTool.url} target='_blank' class="card" style={{ minWidth: '150px', height: '150px', scrollSnapAlign: 'start' }}>
                       <Image src={studyTool.imageurl} style={{ objectFit: 'contain', width: '100%', height: '100%' }}  ></Image>
-                    </div>
+                    </a>
                     <p class="text-left pt-2"><strong>{studyTool.toolname}</strong></p>
                   </Container>
                 ))}
@@ -108,7 +108,7 @@ function index() {
 
         <Col className='col-4' >
           <Container className='mb-3 h-50'>
-            <chaindesk-chatbox-standard style={{ width: '100%', height: '50vh', border: '1px solid black', borderRadius: '10px' }} />
+            <chaindesk-chatbox-standard style={{ width: '100%', height: '50vh', border: '1px solid gray', borderRadius: '10px' }} />
           </Container>
 
           <Container className='bg-danger h-50'>
