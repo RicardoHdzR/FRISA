@@ -51,8 +51,8 @@ function index() {
       <Container >
         <h1 className='mt-5'>{materia}</h1>
         
-          <Button className='mb-3' onClick={() => router.push('/')}>Regresar a Inicio</Button>
-          <Button className='mb-3 mx-3' onClick={handleRefresh}>Carga el Chatbot</Button>
+          <Button variant='danger' className='mb-3' onClick={() => router.push('/')}>Regresar a Inicio</Button>
+          <Button variant='danger' className='mb-3 mx-3' onClick={handleRefresh}>Carga el Chatbot</Button>
       </Container>
 
       <Row>
