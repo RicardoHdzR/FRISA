@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Button, Container, Col, Row, ListGroup } from 'react-bootstrap';
+import { Button, Container, Col, Row, ListGroup, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import _Navbar from '../../../components/Navbar';
 
@@ -58,14 +58,18 @@ function index() {
       <Row>
         <Col className='mb-3' >
           <iframe src={`/${id}.pdf`} width='650px' height='500px' ></iframe>
+          <Container className='bg-danger'>Herramientas</Container>
         </Col>
         <Col className='mb-3' >
-          <chaindesk-chatbox-standard style={{ width: '100%', height: '500px' }} />
-          <ListGroup horizontal className='justify-content-center'>
-            <ListGroup.Item>Herramienta 1</ListGroup.Item>
-            <ListGroup.Item>Herramienta 2</ListGroup.Item>
-            <ListGroup.Item>Herramienta 3</ListGroup.Item>
-          </ListGroup>
+          <Container className='mb-3 bg-danger'>
+            <chaindesk-chatbox-standard style={{ width: '100%', height: '300px' }} />
+          </Container>
+          
+          <Container className='bg-danger'>
+            preguntas
+          </Container>
+
+
         </Col>
       </Row>
     </Container>
