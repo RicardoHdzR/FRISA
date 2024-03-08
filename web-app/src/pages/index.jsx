@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
+import _Navbar from '../components/Navbar';
 
 function Home() {
   const router = useRouter();
@@ -25,17 +26,18 @@ function Home() {
 
   return (
     <Container>
-
-      <Row>   
-        <i class="bi bi-file-earmark"></i>
-        <h1 className="mt-4 mb-4">Bloque 1</h1>
-      </Row>
       {loading ? (
         <div>
           <Spinner animation="border" role="status"></Spinner>
           <p>Cargando...</p>
         </div>
       ) : (
+
+        <Container>
+        <_Navbar/>
+      <Row style={{ textAlign: 'left' }}>
+  <h1 className="mt-4 mb-4">Bloque 1</h1>
+</Row>
         <Row>
         {modules.map((module) => (
           <Col key={module.id} xs={12} sm={6} md={4} lg={3}>
@@ -46,11 +48,14 @@ function Home() {
               <Card.Body>
                 <Card.Title>{module.description}</Card.Title>
               </Card.Body>
-              <Card.Footer className="text-muted"> 0/10</Card.Footer>
+              <Card.Footer className="text-muted"> 0 / 10</Card.Footer>
             </Card>
           </Col>
         ))}
       </Row>
+        
+        </Container>
+        
         
       )}
       <style jsx>{`
