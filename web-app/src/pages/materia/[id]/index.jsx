@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container, Col, Row, ListGroup, Card, Image, Text, Form } from 'react-bootstrap';
+import { FaThumbsUp, FaArrowRight } from 'react-icons/fa';
+
 import Link from "next/link"
 
 import { useRouter } from 'next/router';
@@ -35,16 +37,16 @@ function index() {
   const handleEvaluation = () => {
     console.log(currentQuestion)
     console.log(answers.length)
-    for(let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       console.log(answers[i])
       console.log(currentOptions[i].correct)
-      if(answers[i] == currentOptions[i].correct){
+      if (answers[i] == currentOptions[i].correct) {
         setCorrect('Respuesta Correcta')
-      }else{
+      } else {
         setCorrect('Respuesta Incorrecta')
         break
       }
-    } 
+    }
     console.log(correct)
   };
 
@@ -59,6 +61,13 @@ function index() {
     setCorrect(undefined)
   };
 
+  const handleQuestionBack = () => {
+    setQuestionIndex(questionIndex - 1)
+    setCurrentQuestion(JSON.parse(questions[questionIndex].question))
+    setCurrentOptions(JSON.parse(questions[questionIndex].question).options)
+
+  };
+
   const handleCheckboxChange = (index) => {
     setAnswers((answers) => ({
       ...answers, [index]: !answers[index]
@@ -67,9 +76,9 @@ function index() {
 
   const getQuestions = async () => {
     console.log('fetch preguntas')
-    try{
+    try {
       const response = await fetch('/api/question')
-      const {data} = await response.json()
+      const { data } = await response.json()
       console.log(data)
       console.log(data[0])
       console.log(JSON.parse(data[0].question))
@@ -79,9 +88,9 @@ function index() {
       setCurrentOptions(JSON.parse(data[0].question).options)
       setQuestionIndex(1)
       console.log('questions fetched')
-    }catch (error) {
+    } catch (error) {
       console.error('Error fetching questions:', error);
-      
+
     }
   }
 
@@ -135,13 +144,15 @@ function index() {
       </Container>
 
       <Row>
-        <Col className='col-8' fluid >
+        <Col className='col-sm-12 col-lg-8' fluid >
           <Container className='' style={{ display: 'flex', flexDirection: 'column' }}>
             <Container >
               <iframe className='w-100' style={{ height: '70vh', border: '1px solid black', borderRadius: '10px' }} src={`/${id}.pdf`} ></iframe>
             </Container>
+
+
             <Row style={{ textAlign: 'left' }}>
-              <h5 className="mt-4 mb-4">Herramientas de Apoyo:</h5>
+              <h5 style={{ textAlign: 'left' }} className=" align-left mt-4 mb-4">Herramientas de Apoyo:</h5>
             </Row>
             <div class="carousel" style={{ display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
               <div class="card-container" style={{ width: '100%', display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
@@ -158,38 +169,49 @@ function index() {
           </Container>
         </Col>
 
-        <Col className='col-4' >
-          <Container className='mb-3 h-50'>
-            <chaindesk-chatbox-standard style={{ width: '100%', height: '50vh', border: '1px solid gray', borderRadius: '10px' }} />
+        <Col className=' col-sm-12 col-lg-4 ' >
+          <Container className='' style={{ width: '100%' }}>
+
+            <chaindesk-chatbox-standard style={{ width: '100%', height: '70vh', border: '1px solid gray', borderRadius: '10px' }} />
           </Container>
 
-          <Container className='bg-danger h-50'>
+          <Container className='h-50'>
+
             <Form className='text-start mb-3'>
               <Form.Group>
+                <h5 style={{ textAlign: 'left' }} className=" align-left mt-4 mb-4">Pregunta 1:</h5>
                 <Form.Label>{currentQuestion.question}</Form.Label>
-                
-                {currentOptions.map((option,index) => (
+
+                {currentOptions.map((option, index) => (
                   <div key={index}>
-                    <Form.Check 
-                    type='checkbox' 
-                    name='p1' 
-                    id={`${index}`} 
-                    label={`${option.answer}`} 
-                    checked={answers[index] || false}
-                    onChange={() => handleCheckboxChange(index)}
+                    <Form.Check className='card'
+                      type='checkbox'
+                      name='p1'
+                      id={`${index}`}
+                      label={`${option.answer}`}
+                      checked={answers[index] || false}
+                      onChange={() => handleCheckboxChange(index)}
                     ></Form.Check>
                   </div>
                 ))}
-                
+
               </Form.Group>
             </Form>
             {correct == undefined ? <div></div> : <div>{correct}</div>}
             <div className='text-end'>
-              <Button className='ms-3' onClick={handleEvaluation}>Evaluar</Button>
-              <Button className='ms-3' onClick={handleQuestionChange}>Siguiente Pregunta</Button>
+
+            <Button className='ms-3' onClick={handleEvaluation}>
+            <FaThumbsUp /> Evaluar              </Button>
+            {correct == undefined || correct == "Respuesta Incorrecta"? <div></div> : <Button className='ms-3' onClick={handleQuestionChange}>
+                <FaArrowRight /> Siguiente Pregunta
+              </Button>}
+              
+             
             </div>
           </Container>
 
+
+         
 
         </Col>
 
