@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Col, Row, ListGroup, Card, Image, Text } from 'react-bootstrap';
+import { Button, Container, Col, Row, ListGroup, Card, Image, Text, Form } from 'react-bootstrap';
 import Link from "next/link"
 
 import { useRouter } from 'next/router';
@@ -20,6 +20,69 @@ function index() {
   const [studyTools, setStudyTools] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [selectedOption, setSelectedOption] = useState('');
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState({})
+  const [currentOptions, setCurrentOptions] = useState([])
+  const [questionIndex, setQuestionIndex] = useState(0)
+  const [a1, setA1] = useState(false)
+  const [a2, setA2] = useState(false)
+  const [a3, setA3] = useState(false)
+  const [a4, setA4] = useState(false)
+  const [answers, setAnswers] = useState([false, false, false, false]);
+  const [correct, setCorrect] = useState(undefined)
+
+  const handleEvaluation = () => {
+    console.log(currentQuestion)
+    console.log(answers.length)
+    for(let i = 0; i < 4; i++) {
+      console.log(answers[i])
+      console.log(currentOptions[i].correct)
+      if(answers[i] == currentOptions[i].correct){
+        setCorrect('Respuesta Correcta')
+      }else{
+        setCorrect('Respuesta Incorrecta')
+        break
+      }
+    } 
+    console.log(correct)
+  };
+
+  const handleQuestionChange = () => {
+    setQuestionIndex(questionIndex + 1)
+    console.log(questionIndex)
+    setCurrentQuestion(JSON.parse(questions[questionIndex].question))
+    console.log(currentQuestion)
+    setCurrentOptions(JSON.parse(questions[questionIndex].question).options)
+    console.log(currentOptions)
+
+  };
+
+  const handleCheckboxChange = (index) => {
+    setAnswers((answers) => ({
+      ...answers, [index]: !answers[index]
+    }))
+  }
+
+  const getQuestions = async () => {
+    console.log('fetch preguntas')
+    try{
+      const response = await fetch('/api/question')
+      const {data} = await response.json()
+      console.log(data)
+      console.log(data[0])
+      console.log(JSON.parse(data[0].question))
+      console.log(JSON.parse(data[0].question).options)
+      setQuestions(data)
+      setCurrentQuestion(JSON.parse(data[0].question))
+      setCurrentOptions(JSON.parse(data[0].question).options)
+      setQuestionIndex(1)
+      console.log('questions fetched')
+    }catch (error) {
+      console.error('Error fetching questions:', error);
+      
+    }
+  }
 
   const handleRefresh = () => {
     router.reload();
@@ -27,6 +90,7 @@ function index() {
 
   useEffect(() => {
     getStudyTools()
+    getQuestions()
     if (id) {
       if (id != undefined) {
         console.log('seteamos el id');
@@ -65,18 +129,13 @@ function index() {
       <_Navbar />
       <Container >
         <h1 className='mt-5'>{materia}</h1>
-
         <Button variant='danger' className='mb-3' onClick={() => router.push('/')}>Regresar a Inicio</Button>
         <Button variant='danger' className='mb-3 mx-3' onClick={handleRefresh}>Carga el Chatbot</Button>
       </Container>
 
       <Row>
         <Col className='col-8' fluid >
-
           <Container className='' style={{ display: 'flex', flexDirection: 'column' }}>
-
-
-
             <Container >
               <iframe className='w-100' style={{ height: '70vh', border: '1px solid black', borderRadius: '10px' }} src={`/${id}.pdf`} ></iframe>
             </Container>
@@ -86,8 +145,6 @@ function index() {
             <Row style={{ textAlign: 'left' }}>
               <h5 className=" align-left mt-4 mb-4">Herramientas de Apoyo:</h5>
             </Row>
-
-
             <div class="carousel" style={{ display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
               <div class="card-container" style={{ width: '100%', display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
                 {studyTools.map((studyTool) => (
@@ -100,12 +157,8 @@ function index() {
                 ))}
               </div>
             </div>
-
-
           </Container>
         </Col>
-
-
 
         <Col className='col-4' >
           <Container className='mb-3 h-50'>
@@ -113,7 +166,30 @@ function index() {
           </Container>
 
           <Container className='bg-danger h-50'>
-            preguntas
+            <Form className='text-start mb-3'>
+              <Form.Group>
+                <Form.Label>{currentQuestion.question}</Form.Label>
+                
+                {currentOptions.map((option,index) => (
+                  <div key={index}>
+                    <Form.Check 
+                    type='checkbox' 
+                    name='p1' 
+                    id={`${index}`} 
+                    label={`${option.answer}`} 
+                    checked={answers[index] || false}
+                    onChange={() => handleCheckboxChange(index)}
+                    ></Form.Check>
+                  </div>
+                ))}
+                
+              </Form.Group>
+            </Form>
+            {correct == undefined ? <div></div> : <div>{correct}</div>}
+            <div className='text-end'>
+              <Button className='ms-3' onClick={handleEvaluation}>Evaluar</Button>
+              <Button className='ms-3' onClick={handleQuestionChange}>Siguiente Pregunta</Button>
+            </div>
           </Container>
 
 
