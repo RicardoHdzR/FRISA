@@ -82,8 +82,9 @@ function index() {
             </Container>
 
 
+            <h5 className=" text-left mt-4 mb-4">Herramientas de Apoyo:</h5>
             <Row style={{ textAlign: 'left' }}>
-              <h5 className="mt-4 mb-4">Herramientas de Apoyo:</h5>
+              <h5 className=" align-left mt-4 mb-4">Herramientas de Apoyo:</h5>
             </Row>
 
 
