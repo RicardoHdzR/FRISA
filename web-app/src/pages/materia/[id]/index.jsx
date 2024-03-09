@@ -24,16 +24,45 @@ function index() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [currentOptions, setCurrentOptions] = useState([])
+  const [questionIndex, setQuestionIndex] = useState(0)
+  const [a1, setA1] = useState(false)
+  const [a2, setA2] = useState(false)
+  const [a3, setA3] = useState(false)
+  const [a4, setA4] = useState(false)
+  const [answers, setAnswers] = useState([false, false, false, false]);
+  const [correct, setCorrect] = useState(undefined)
 
-  const handleOption = (e) => {
-    console.log(e.target.id)
-    setSelectedOption(e.target.id)
+  const handleEvaluation = () => {
+    console.log(currentQuestion)
+    console.log(answers.length)
+    for(let i = 0; i < 4; i++) {
+      console.log(answers[i])
+      console.log(currentOptions[i].correct)
+      if(answers[i] == currentOptions[i].correct){
+        setCorrect('Respuesta Correcta')
+      }else{
+        setCorrect('Respuesta Incorrecta')
+        break
+      }
+    } 
+    console.log(correct)
   };
 
-  const handleQuestion = async () => {
-    
+  const handleQuestionChange = () => {
+    setQuestionIndex(questionIndex + 1)
+    console.log(questionIndex)
+    setCurrentQuestion(JSON.parse(questions[questionIndex].question))
+    console.log(currentQuestion)
+    setCurrentOptions(JSON.parse(questions[questionIndex].question).options)
+    console.log(currentOptions)
 
   };
+
+  const handleCheckboxChange = (index) => {
+    setAnswers((answers) => ({
+      ...answers, [index]: !answers[index]
+    }))
+  }
 
   const getQuestions = async () => {
     console.log('fetch preguntas')
@@ -47,17 +76,13 @@ function index() {
       setQuestions(data)
       setCurrentQuestion(JSON.parse(data[0].question))
       setCurrentOptions(JSON.parse(data[0].question).options)
+      setQuestionIndex(1)
       console.log('questions fetched')
     }catch (error) {
       console.error('Error fetching questions:', error);
       
     }
-    
-    
-    
   }
-
-
 
   const handleRefresh = () => {
     router.reload();
@@ -104,28 +129,19 @@ function index() {
       <_Navbar />
       <Container >
         <h1 className='mt-5'>{materia}</h1>
-
         <Button variant='danger' className='mb-3' onClick={() => router.push('/')}>Regresar a Inicio</Button>
         <Button variant='danger' className='mb-3 mx-3' onClick={handleRefresh}>Carga el Chatbot</Button>
       </Container>
 
       <Row>
         <Col className='col-8' fluid >
-
           <Container className='' style={{ display: 'flex', flexDirection: 'column' }}>
-
-
-
             <Container >
               <iframe className='w-100' style={{ height: '70vh', border: '1px solid black', borderRadius: '10px' }} src={`/${id}.pdf`} ></iframe>
             </Container>
-
-
             <Row style={{ textAlign: 'left' }}>
               <h5 className="mt-4 mb-4">Herramientas de Apoyo:</h5>
             </Row>
-
-
             <div class="carousel" style={{ display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
               <div class="card-container" style={{ width: '100%', display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
                 {studyTools.map((studyTool) => (
@@ -138,12 +154,8 @@ function index() {
                 ))}
               </div>
             </div>
-
-
           </Container>
         </Col>
-
-
 
         <Col className='col-4' >
           <Container className='mb-3 h-50'>
@@ -157,17 +169,24 @@ function index() {
                 
                 {currentOptions.map((option,index) => (
                   <div key={index}>
-                    <Form.Check type='checkbox' name='p1' id={`p1-${index}`} label={`${option.answer}`}></Form.Check>
+                    <Form.Check 
+                    type='checkbox' 
+                    name='p1' 
+                    id={`${index}`} 
+                    label={`${option.answer}`} 
+                    checked={answers[index] || false}
+                    onChange={() => handleCheckboxChange(index)}
+                    ></Form.Check>
                   </div>
                 ))}
                 
               </Form.Group>
             </Form>
+            {correct == undefined ? <div></div> : <div>{correct}</div>}
             <div className='text-end'>
-              <Button className='ms-3' >Evaluar</Button>
-              <Button className='ms-3'>Siguiente Pregunta</Button>
+              <Button className='ms-3' onClick={handleEvaluation}>Evaluar</Button>
+              <Button className='ms-3' onClick={handleQuestionChange}>Siguiente Pregunta</Button>
             </div>
-            
           </Container>
 
 
