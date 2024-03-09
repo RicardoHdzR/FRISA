@@ -55,7 +55,8 @@ function index() {
     console.log(currentQuestion)
     setCurrentOptions(JSON.parse(questions[questionIndex].question).options)
     console.log(currentOptions)
-
+    setAnswers([false, false, false, false])
+    setCorrect(undefined)
   };
 
   const handleCheckboxChange = (index) => {
