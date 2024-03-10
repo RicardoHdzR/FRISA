@@ -45,7 +45,9 @@ function index() {
   const handleEvaluation = () => {
     console.log(currentQuestion)
     console.log(answers.length)
+    console.log(answers)
     for (let i = 0; i < 4; i++) {
+      console.log(i)
       console.log(answers[i])
       console.log(currentOptions[i].correct)
       if (answers[i] == currentOptions[i].correct) {
@@ -189,7 +191,7 @@ function index() {
 
             <Form className='text-start mb-3'>
               <Form.Group>
-                <h5 style={{ textAlign: 'left' }} className=" align-left mt-4 mb-4">Pregunta 1:</h5>
+                <h5 style={{ textAlign: 'left' }} className=" align-left mt-4 mb-4">{`Pregunta ${questionIndex} (Selecciona solo 1 opción)`}</h5>
                 <Form.Label>{currentQuestion.question}</Form.Label>
 
                 {currentOptions.map((option, index) => (
@@ -207,7 +209,7 @@ function index() {
 
               </Form.Group>
             </Form>
-            {correct == undefined ? <div></div> : <div className='text-danger'>{correct}</div>}
+            {correct == undefined ? <div></div> : <div className={correct === "Respuesta Correcta" ? 'text-success' : 'text-danger'}>{correct}</div>}
             <div className='text-end'>
 
               <Button className='ms-3' onClick={handleEvaluation}>
