@@ -82,7 +82,7 @@ function LogIn() {
                             </Form.Group>
 
                             <Row className="mb-3">
-                                <Button variant="primary" onClick={handleLogIn}>
+                                <Button variant="danger" onClick={handleLogIn}>
                                     Iniciar Sesión
                                 </Button>
                             </Row>
@@ -95,7 +95,7 @@ function LogIn() {
                                 <Card.Text>¿No tienes una Cuenta?</Card.Text>
                             </Row>
                             <Row className="mb-3">
-                                <Button variant="info" onClick={() => router.push('/signIn')}>
+                                <Button variant="secondary" onClick={() => router.push('/signIn')}>
                                     Registrarse
                                 </Button>
                             </Row>

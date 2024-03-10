@@ -7,7 +7,7 @@ export default function index(req, res) {
     switch (method) {
 
         case 'POST':
-            if (body.password && body.email) {
+            if (!body.firstName ) {
                 const { email, password } = body;
                 const query = {
                     text: 'SELECT * FROM FrisaUser WHERE email = $1 AND password = $2',
