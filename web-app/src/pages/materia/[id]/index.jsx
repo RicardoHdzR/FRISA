@@ -21,6 +21,7 @@ function index() {
   `);
   const [materia, setMateria] = useState('');
   const [studyTools, setStudyTools] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [questions, setQuestions] = useState([]);
@@ -95,6 +96,7 @@ function index() {
   useEffect(() => {
     sessionHandler()
     getStudyTools()
+    getVideos()
     getQuestions()
     if (id) {
       if (id != undefined) {
@@ -115,6 +117,18 @@ function index() {
       const response = await fetch('/api/studytool');
       const data = await response.json();
       setStudyTools(data.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching modules:', error);
+      setLoading(true);
+    }
+  };
+
+  const getVideos = async () => {
+    try {
+      const response = await fetch('/api/video');
+      const data = await response.json();
+      setVideos(data.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching modules:', error);
@@ -161,6 +175,23 @@ function index() {
                 </Row>
               </Container>
 
+              <Row style={{ textAlign: 'left' }}>
+                <h5 style={{ textAlign: 'left' }} className=" align-left mt-4 mb-4">Videos de Apoyo:</h5>
+              </Row>
+
+              <Container className='pb-4'>
+            <Row className="flex-nowrap overflow-auto" style={{ maxWidth: "100vw", scrollSnapType: 'x mandatory', gap: '8px' }}>
+              {videos.map((video, index) => (
+                <Col xs={6} sm={4} md={4} lg={3} key={index}>
+                  <a href={video.url} target='_blank' className="card" style={{ minWidth: '150px', height: '150px', scrollSnapAlign: 'start', display: 'block' }}>
+                    <Image src={`https://img.youtube.com/vi/${getYoutubeId(video.url)}/default.jpg`} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />
+                  </a>
+                  <p className="text-left pt-2"><strong>{video.toolname}</strong></p>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+
             </Container>
           </Col>
           <Col className=' col-sm-12 col-md-12 col-lg-4 ' >
@@ -204,5 +235,15 @@ function index() {
 
   )
 }
+
+const getYoutubeId = (url) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    return match[2];
+  } else {
+    return null;
+  }
+};
 
 export default index
