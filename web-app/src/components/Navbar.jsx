@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Image, Button, Row, Col } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import { getSession } from '../utils/session';
 
 function _Navbar() {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const response = await fetch('/api/session'); 
+        const data = await response.json();
+        setIsLoggedIn(!!data); 
+      } catch (error) {
+        console.error('Error fetching session:', error);
+      }
+    };
+
+    fetchSession();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -23,7 +39,7 @@ function _Navbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Row className="w-100">
           <Col className="d-flex justify-content-end">
-            <Button variant="outline-danger" onClick={handleLogout}>Cerrar Sesión</Button>
+            {isLoggedIn && <Button variant="outline-danger" onClick={handleLogout}>Cerrar Sesión</Button>}
           </Col>
         </Row>
       </Navbar.Collapse>
