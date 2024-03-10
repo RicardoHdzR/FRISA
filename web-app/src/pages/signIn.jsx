@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-import { Container, Card, Form, Button, Row } from 'react-bootstrap'
+import { Container, Card, Form, Button, Row, Col } from 'react-bootstrap'
 
 function signIn() {
   const router = useRouter()
@@ -18,6 +18,10 @@ function signIn() {
                         <Form.Control></Form.Control>
                     </Form.Group>
                     <Form.Group className='mb-3'>
+                        <Form.Label>Fecha de Nacimiento</Form.Label>
+                        <Form.Control type='date'></Form.Control>
+                    </Form.Group>
+                    <Form.Group className='mb-3'>
                         <Form.Label>Correo Electrónico</Form.Label>
                         <Form.Control type='email' placeholder='nombre@ejemplo.com' />
                     </Form.Group>
@@ -25,6 +29,7 @@ function signIn() {
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control type='password' ></Form.Control>
                     </Form.Group>
+                   
                     
                     <Row className='mb-3'>
                         <Button variant='primary'>Registrarse</Button>

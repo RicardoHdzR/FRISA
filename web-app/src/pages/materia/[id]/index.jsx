@@ -120,7 +120,6 @@ function index() {
     try {
       const response = await fetch('/api/studytool');
       const data = await response.json();
-      console.log(data)
       setStudyTools(data.data);
       setLoading(false);
     } catch (error) {
@@ -139,7 +138,7 @@ function index() {
       <_Navbar />
       <Container >
         <h1 className='mt-5'>{materia}</h1>
-        <Button variant='danger' className='mb-3' onClick={() => router.push('/')}>Regresar a Inicio</Button>
+        <Button variant='danger' className='mb-3' onClick={() => router.push('/')}>Regresar a Materias</Button>
         <Button variant='danger' className='mb-3 mx-3' onClick={handleRefresh}>Carga el Chatbot</Button>
       </Container>
 
