@@ -23,7 +23,7 @@ function _Navbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Row className="w-100">
           <Col className="d-flex justify-content-end">
-            <Button variant="outline-danger" onClick={handleLogout}>Logout</Button>
+            <Button variant="outline-danger" onClick={handleLogout}>Cerrar Sesión</Button>
           </Col>
         </Row>
       </Navbar.Collapse>
