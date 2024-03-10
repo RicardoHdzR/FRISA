@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Card, Spinner, Row, Col } from 'react-bootstrap';
 import _Navbar from '../components/Navbar';
+import axios from 'axios';
 
 function Home() {
   const router = useRouter();
@@ -10,8 +11,9 @@ function Home() {
 
   const sessionHandler = async () => {
     //Obtenemos la sesión
-    const session = await fetch(`/api/session`)
+    const session = await axios.get(`/api/session`)
     //Si existe información de sesión la lee y decide a donde mandar al usuario/admin
+    console.log(session)
     if(session.data == null){
         router.push('/logIn')
     }

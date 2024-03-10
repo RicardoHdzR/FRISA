@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { pgPool } from "../../utils/database";
+import { setSession } from "../../utils/session";
 
 export default function index(req, res) {
     const { method, body } = req;
@@ -19,6 +20,8 @@ export default function index(req, res) {
                         console.error('Error executing query:', error);
                         return res.status(500).json({ error: true, message: 'Internal Server Error' });
                     } else {
+                        const session = results.rows[0]
+                        setSession(res, session)
                         res.json({
                             error: false,
                             message: 'Data retrieved successfully',
