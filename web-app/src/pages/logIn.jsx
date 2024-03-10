@@ -24,12 +24,11 @@ function LogIn() {
         });
 
         const userData = await response.json();
-        console.log(userData)
-        setUser(userData);
 
         if (userData.data.length === 0) {
             setErrorMessage('Email o contraseña inválido. Intentalo de nuevo.');
         }
+        setUser(userData.data[0]);
         
     };
 
