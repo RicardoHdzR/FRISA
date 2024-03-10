@@ -60,6 +60,8 @@ function LogIn() {
             >
                 <Card>
                     <Card.Body className='m-4'>
+                    <h1 className='mb-4'>Bienvenido 👋</h1>
+
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label><strong>Correo Electrónico</strong></Form.Label>

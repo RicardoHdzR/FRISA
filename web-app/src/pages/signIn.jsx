@@ -1,51 +1,112 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { Container, Card, Form, Button, Row, Col } from 'react-bootstrap'
+import _Navbar from '../components/Navbar';
 
-function signIn() {
-  const router = useRouter()
-  return (
-    <Container>
-        <Card className='justify-content-center'>
-            <Card.Body>
-                <Form>
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Nombre</Form.Label>
-                        <Form.Control></Form.Control>
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Apellido</Form.Label>
-                        <Form.Control></Form.Control>
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Fecha de Nacimiento</Form.Label>
-                        <Form.Control type='date'></Form.Control>
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Correo Electrónico</Form.Label>
-                        <Form.Control type='email' placeholder='nombre@ejemplo.com' />
-                    </Form.Group>
-                    <Form.Group className='mb-3'>
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control type='password' ></Form.Control>
-                    </Form.Group>
-                   
-                    
-                    <Row className='mb-3'>
-                        <Button variant='primary'>Registrarse</Button>
-                    </Row>
-                    <Row className='mb-3'>
-                        <Card.Text>¿Ya tienes una cuenta?</Card.Text>
-                    </Row>
-                    <Row className='mb-3'>
-                        <Button variant='info' onClick={() => router.push('/logIn')}>Iniciar Sesión</Button>
-                    </Row>
-                </Form>
-            </Card.Body>
-        </Card>
-    </Container>
-    
-  )
+function SignIn() {
+    const router = useRouter()
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSignUp = async () => {
+        const userDetails = {
+            firstName: firstName,
+            lastName: lastName,
+            birthDate: birthDate,
+            email: email,
+            password: password
+        };
+
+        try {
+            const response = await fetch('/api/frisauser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userDetails),
+            });
+
+            if (response.ok) {
+                console.log(await response.json())
+                // router.push('/'); // Redirect to home page if sign up successful
+            } else {
+                throw new Error('Error creating user');
+            }
+        } catch (error) {
+            console.error('Sign up error:', error);
+            setErrorMessage('Error creating user. Please try again.');
+        }
+    };
+
+    return (
+        <Container fluid className="p-0 m-0" style={{ height: '100vh' }}>
+            <_Navbar />
+
+            <div
+                style={{
+                    backgroundImage: `linear-gradient(
+                        rgba(0, 0, 0, 0.70), 
+                      rgba(0, 0, 0, 0.70)
+                      ), url('https://info.insidetracker.com/hubfs/man%20computer%20wellness%20myths.jpg')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    minHeight: '100vh',
+                    minWidth: '100vw',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <Card className='justify-content-center'>
+                    <Card.Body className='m-4'>
+                    <h1 className='mb-4'>Crear Cuenta 👤</h1>
+
+                        <Form>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>Nombre</strong></Form.Label>
+                                <Form.Control type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>Apellido</strong></Form.Label>
+                                <Form.Control type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>Fecha de Nacimiento</strong></Form.Label>
+                                <Form.Control type='date' value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>Correo Electrónico</strong></Form.Label>
+                                <Form.Control type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='nombre@ejemplo.com' />
+                            </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label><strong>Contraseña</strong></Form.Label>
+                                <Form.Control type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            </Form.Group>
+
+
+                            <Row className='mb-3'>
+                                <Button variant='primary' onClick={handleSignUp}>Registrarse</Button>
+                            </Row>
+                            <Row className='mb-3'>
+                                <Card.Text>{errorMessage}</Card.Text>
+                            </Row>
+                            <Row className='mb-3'>
+                                <Card.Text>¿Ya tienes una cuenta?</Card.Text>
+                            </Row>
+                            <Row className='mb-3'>
+                                <Button variant='info' onClick={() => router.push('/logIn')}>Iniciar Sesión</Button>
+                            </Row>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </div>
+        </Container>
+    );
 }
 
-export default signIn
+export default SignIn;
