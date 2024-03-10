@@ -13,7 +13,7 @@ function Home() {
     //Obtenemos la sesión
     const session = await axios.get(`/api/session`)
     //Si existe información de sesión la lee y decide a donde mandar al usuario/admin
-    console.log(session)
+    
     if(session.data == null){
         router.push('/logIn')
     }

@@ -12,6 +12,7 @@ function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [user, setUser] = useState({})
 
     const handleSignUp = async () => {
         const userDetails = {
@@ -22,26 +23,31 @@ function SignIn() {
             password: password
         };
 
-        try {
-            const response = await fetch('/api/frisauser', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userDetails),
-            });
+        
+        const response = await fetch('/api/frisauser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userDetails),
+        });
 
-            if (response.ok) {
-                console.log(await response.json())
-                // router.push('/'); // Redirect to home page if sign up successful
-            } else {
-                throw new Error('Error creating user');
-            }
-        } catch (error) {
-            console.error('Sign up error:', error);
-            setErrorMessage('Error creating user. Please try again.');
+        const userData = await response.json();
+        
+        if (userData.data.length === 0) {
+            setErrorMessage('Email o contraseña inválido. Inténtalo de nuevo.');
+            return;
         }
+        setUser(userData.data[0]);
+        
     };
+
+    useEffect(() => {
+        
+        if (user.id) {
+            router.push('/');
+        }
+    }, [user]);
 
     return (
         <Container fluid className="p-0 m-0" style={{ height: '100vh' }}>
