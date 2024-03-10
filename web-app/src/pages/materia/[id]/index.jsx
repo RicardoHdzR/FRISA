@@ -196,21 +196,25 @@ function index() {
 
               </Form.Group>
             </Form>
-            {correct == undefined ? <div></div> : <div>{correct}</div>}
+            {correct == undefined ? <div></div> : <div className='text-danger'>{correct}</div>}
             <div className='text-end'>
 
-            <Button className='ms-3' onClick={handleEvaluation}>
-            <FaThumbsUp /> Evaluar              </Button>
-            {correct == undefined || correct == "Respuesta Incorrecta"? <div></div> : <Button className='ms-3' onClick={handleQuestionChange}>
+              <Button className='ms-3' onClick={handleEvaluation}>
+                <FaThumbsUp /> Evaluar              </Button>
+
+
+              {correct == undefined || correct == "Respuesta Incorrecta" ? <div></div> : <Button className='ms-3' onClick={handleQuestionChange}>
+
+                
                 <FaArrowRight /> Siguiente Pregunta
               </Button>}
-              
-             
+
+
             </div>
           </Container>
 
 
-         
+
 
         </Col>
 
