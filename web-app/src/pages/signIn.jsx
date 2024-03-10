@@ -68,23 +68,33 @@ function SignIn() {
 
                         <Form>
                             <Form.Group className='mb-3'>
-                                <Form.Label><strong>Nombre</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Nombre</strong></Form.Label>
+                                </Row>
                                 <Form.Control type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                             </Form.Group>
                             <Form.Group className='mb-3'>
-                                <Form.Label><strong>Apellido</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Apellido</strong></Form.Label>
+                                </Row>
                                 <Form.Control type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                             </Form.Group>
                             <Form.Group className='mb-3'>
-                                <Form.Label><strong>Fecha de Nacimiento</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Fecha de Nacimiento</strong></Form.Label>
+                                </Row>
                                 <Form.Control type='date' value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
                             </Form.Group>
                             <Form.Group className='mb-3'>
-                                <Form.Label><strong>Correo Electrónico</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Correo Electrónico</strong></Form.Label>
+                                </Row>
                                 <Form.Control type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='nombre@ejemplo.com' />
                             </Form.Group>
                             <Form.Group className='mb-3'>
-                                <Form.Label><strong>Contraseña</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Contraseña</strong></Form.Label>
+                                </Row>
                                 <Form.Control type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                             </Form.Group>
 

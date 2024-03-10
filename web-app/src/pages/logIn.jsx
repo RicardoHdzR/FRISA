@@ -60,11 +60,13 @@ function LogIn() {
             >
                 <Card>
                     <Card.Body className='m-4'>
-                    <h1 className='mb-4'>Bienvenido 👋</h1>
+                        <h1 className='mb-4'>Bienvenido 👋</h1>
 
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Label><strong>Correo Electrónico</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Correo Electrónico</strong></Form.Label>
+                                </Row>
                                 <Form.Control
                                     type="email"
                                     placeholder="nombre@ejemplo.com"
@@ -73,7 +75,9 @@ function LogIn() {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
-                                <Form.Label><strong>Contraseña</strong></Form.Label>
+                                <Row>
+                                    <Form.Label style={{ textAlign: 'left' }}><strong>Contraseña</strong></Form.Label>
+                                </Row>
                                 <Form.Control
                                     type="password"
                                     value={password}
