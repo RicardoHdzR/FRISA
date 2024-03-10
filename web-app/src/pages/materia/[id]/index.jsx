@@ -35,9 +35,9 @@ function index() {
     //Obtenemos la sesión
     const session = await axios.get(`/api/session`)
     //Si existe información de sesión la lee y decide a donde mandar al usuario/admin
-    if(session.data == null){
-        router.push('/logIn')
-    }else{
+    if (session.data == null) {
+      router.push('/logIn')
+    } else {
       setSession(session.data)
     }
   }
@@ -127,7 +127,7 @@ function index() {
 
   return (
 
-    <Container >
+    <Container className='ps-4'>
       <script type='module' dangerouslySetInnerHTML={{ __html: chatbox }} />
 
       <Container>
@@ -139,7 +139,7 @@ function index() {
         </Container>
 
         <Row>
-          <Col className='col-sm-12 col-lg-8' fluid >
+          <Col className='col-sm-12 col-md-12 col-lg-8' fluid >
             <Container className='' style={{ display: 'flex', flexDirection: 'column' }}>
               <Container >
                 <iframe className='w-100' style={{ height: '70vh', border: '1px solid black', borderRadius: '10px' }} src={`/${id}.pdf`} ></iframe>
@@ -147,21 +147,23 @@ function index() {
               <Row style={{ textAlign: 'left' }}>
                 <h5 style={{ textAlign: 'left' }} className=" align-left mt-4 mb-4">Herramientas de Apoyo:</h5>
               </Row>
-              <div class="carousel" style={{ display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
-                <div class="card-container" style={{ width: '100%', display: 'flex', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', gap: '8px' }}>
-                  {studyTools.map((studyTool) => (
-                    <Container>
-                      <a href={studyTool.url} target='_blank' class="card" style={{ minWidth: '150px', height: '150px', scrollSnapAlign: 'start' }}>
-                        <Image src={studyTool.imageurl} style={{ objectFit: 'contain', width: '100%', height: '100%' }}  ></Image>
+
+              <Container className='pb-4'>
+                <Row  className="flex-nowrap overflow-auto" style={{maxWidth:"100vw" , scrollSnapType: 'x mandatory', gap: '8px' }}>
+                  {studyTools.map((studyTool, index) => (
+                    <Col xs={6} sm={4} md={4} lg={3} key={index}>
+                      <a href={studyTool.url} target='_blank' className="card" style={{ minWidth: '150px', height: '150px', scrollSnapAlign: 'start', display: 'block' }}>
+                        <Image src={studyTool.imageurl} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />
                       </a>
-                      <p class="text-left pt-2"><strong>{studyTool.toolname}</strong></p>
-                    </Container>
+                      <p className="text-left pt-2"><strong>{studyTool.toolname}</strong></p>
+                    </Col>
                   ))}
-                </div>
-              </div>
+                </Row>
+              </Container>
+
             </Container>
           </Col>
-          <Col className=' col-sm-12 col-lg-4 ' >
+          <Col className=' col-sm-12 col-md-12 col-lg-4 ' >
             <Container className='' style={{ width: '100%' }}>
               <chaindesk-chatbox-standard style={{ width: '100%', height: '70vh', border: '1px solid gray', borderRadius: '10px' }} />
             </Container>
@@ -187,7 +189,7 @@ function index() {
               {correct == undefined ? <div></div> : <div className={correct === "Respuesta Correcta" ? 'text-success' : 'text-danger'}>{correct}</div>}
               <div className='text-end'>
                 <Button className='ms-3' onClick={handleEvaluation}>
-                  <FaThumbsUp /> Evaluar              
+                  <FaThumbsUp /> Evaluar
                 </Button>
                 {correct == undefined || correct == "Respuesta Incorrecta" ? <div></div> : <Button className='ms-3' onClick={handleQuestionChange}>
                   <FaArrowRight /> Siguiente Pregunta
