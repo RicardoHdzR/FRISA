@@ -42,11 +42,13 @@ export default function index(req, res) {
                         return res.status(500).json({ error: true, message: 'Internal Server Error' });
                     } else {
                         const newUser = results.rows[0];
+                        
+                        setSession(res, newUser)
                         // Generate JWT token here if needed
                         res.json({
                             error: false,
                             message: 'User created successfully',
-                            data: newUser
+                            data: results.rows
                         });
                     }
                 });
