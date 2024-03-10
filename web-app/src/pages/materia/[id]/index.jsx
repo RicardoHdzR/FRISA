@@ -105,8 +105,20 @@ function index() {
         } else if (id == 2) {
           setMateria('El lenguaje en la Relación del Hombre con el Mundo');
         } else if (id == 3) {
+          setMateria('Representaciones simbólicas y algoritmos');
+        } else if (id == 4) {
+          setMateria('Ser Social y Sociedad');
+        } else if (id == 5) {
+          setMateria('Mi Mundo en otra Lengua');
+        } else if (id == 6) {
+          setMateria('Tecnología de Información y Comunicación');
+        } else if (id == 7) {
           setMateria('Textos y Visiones del Mundo');
-        }
+        } else if (id == 8) {
+          setMateria('Matemáticas y Representaciones del Sistema Natural');
+        } 
+
+        
       }
     }
   }, [id]);
