@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Col, Row, ListGroup, Card, Image, Text, Form } from 'react-bootstrap';
+import { Button, Container, Col, Row, ListGroup, Card, Image, Text, Form, Spinner } from 'react-bootstrap';
 import { FaThumbsUp, FaArrowRight } from 'react-icons/fa';
+import axios from 'axios';
 
 import Link from "next/link"
 
@@ -22,17 +23,24 @@ function index() {
   const [studyTools, setStudyTools] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [selectedOption, setSelectedOption] = useState('');
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({})
   const [currentOptions, setCurrentOptions] = useState([])
   const [questionIndex, setQuestionIndex] = useState(0)
-  const [a1, setA1] = useState(false)
-  const [a2, setA2] = useState(false)
-  const [a3, setA3] = useState(false)
-  const [a4, setA4] = useState(false)
   const [answers, setAnswers] = useState([false, false, false, false]);
   const [correct, setCorrect] = useState(undefined)
+  const [session, setSession] = useState(undefined)
+
+  const sessionHandler = async () => {
+    //Obtenemos la sesión
+    const session = await axios.get(`/api/session`)
+    //Si existe información de sesión la lee y decide a donde mandar al usuario/admin
+    if(session.data == null){
+        router.push('/logIn')
+    }else{
+      setSession(session.data)
+    }
+  }
 
   const handleEvaluation = () => {
     console.log(currentQuestion)
@@ -99,6 +107,7 @@ function index() {
   };
 
   useEffect(() => {
+    sessionHandler()
     getStudyTools()
     getQuestions()
     if (id) {
@@ -135,6 +144,8 @@ function index() {
 
     <Container >
       <script type='module' dangerouslySetInnerHTML={{ __html: chatbox }} />
+      
+      <Container>
       <_Navbar />
       <Container >
         <h1 className='mt-5'>{materia}</h1>
@@ -221,6 +232,7 @@ function index() {
 
 
       </Row>
+      </Container>
     </Container>
 
 

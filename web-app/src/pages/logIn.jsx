@@ -26,8 +26,7 @@ function LogIn() {
         });
 
         const userData = await response.json();
-        console.log(userData)
-
+        
         if (userData.data.length === 0) {
             setErrorMessage('Email o contraseña inválido. Inténtalo de nuevo.');
             return;
