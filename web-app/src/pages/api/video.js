@@ -9,7 +9,7 @@ export default function index(req, res) {
             pgPool.query('SELECT * FROM Videos', (error, results) => {
                 if (error) {
                     throw error;
-                } else {
+                } else {                
                     res.json({
                         error: false,
                         message: 'Data retrieved successfully',

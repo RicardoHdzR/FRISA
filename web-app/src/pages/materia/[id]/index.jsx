@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Col, Row, ListGroup, Card, Image, Text, Form, Spinner } from 'react-bootstrap';
+import { Button, Container, Col, Row, Image, Form } from 'react-bootstrap';
 import { FaThumbsUp, FaArrowRight } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -117,8 +117,6 @@ function index() {
         } else if (id == 8) {
           setMateria('Matemáticas y Representaciones del Sistema Natural');
         } 
-
-        
       }
     }
   }, [id]);
