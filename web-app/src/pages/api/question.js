@@ -6,7 +6,7 @@ export default function index(req, res) {
 
     switch (method) {
         case 'GET':
-            pgPool.query('SELECT * FROM Question', (error, results) => {
+            pgPool.query('SELECT * FROM Question ORDER BY id ASC;', (error, results) => {
                 if (error) {
                     throw error;
                 } else {
